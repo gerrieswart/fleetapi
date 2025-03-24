@@ -1,0 +1,486 @@
+﻿openapi: 3.0.0
+info:
+  title: Fleet API
+  version: 1.0.0
+  description: API documentation for the Fleet Management System
+servers:
+  - url: http://localhost:6145
+    description: Development server
+tags:
+  - name: Incidents
+    description: Endpoints related to incidents
+paths:
+  /api/incidents/auto-incident-count-by-month:
+    get:
+      tags:
+        - Incidents
+      summary: Get auto incident count by month
+      description: Retrieve the count of auto incidents grouped by month.
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          description: The start date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: The end date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: A standardized response format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Year:
+                          type: integer
+                          example: 2024
+                        Month:
+                          type: integer
+                          example: 1
+                        IncidentCount:
+                          type: integer
+                          example: 5
+                  message:
+                    type: string
+                    example: "Auto incident count retrieved successfully"
+              example:
+                success: true
+                data:
+                  - Year: 2024
+                    Month: 1
+                    IncidentCount: 5
+                message: "Auto incident count retrieved successfully"
+  /api/incidents/near-misses-count-by-person:
+    get:
+      tags:
+        - Incidents
+      summary: Get near misses count by person
+      description: Retrieve the count of near misses for a specific person.
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          description: The start date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: The end date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: A standardized response format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ReportedBy:
+                          type: string
+                          example: "John Doe"
+                        NearMissCount:
+                          type: integer
+                          example: 2
+                  message:
+                    type: string
+                    example: "Near misses count retrieved successfully"
+              example:
+                success: true
+                data:
+                  - ReportedBy: "John Doe"
+                    NearMissCount: 2
+                message: "Near misses count retrieved successfully"
+  /api/incidents/safety-hazard-count-by-person:
+    get:
+      tags:
+        - Incidents
+      summary: Get safety hazard count by person
+      description: Retrieve the count of safety hazards reported by a specific person.
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          description: The start date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: The end date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: A standardized response format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ReportedBy:
+                          type: string
+                          example: "John Doe"
+                        SafetyHazardCount:
+                          type: integer
+                          example: 2
+                  message:
+                    type: string
+                    example: "Safety hazard count retrieved successfully"
+              example:
+                success: true
+                data:
+                  - ReportedBy: "John Doe"
+                    SafetyHazardCount: 2
+                message: "Safety hazard count retrieved successfully"
+  /api/incidents/auto-incidents-driver-at-fault:
+    get:
+      tags:
+        - Incidents
+      summary: Get auto incidents where the driver was at fault
+      description: Retrieve a list of auto incidents where the driver was determined to be at fault.
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          description: The start date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: The end date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: A standardized response format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Title:
+                          type: string
+                          example: "V1234-2024-03-01"
+                        ReportedBy:
+                          type: string
+                          example: "Jane Doe"
+                        DriverName:
+                          type: string
+                          example: "John Doe"
+                        DriverEmail:
+                          type: string
+                          example: "john.doe@example.com"
+                        IsDriverAtFault:
+                          type: boolean
+                          example: true
+                        ClaimSubmitted:
+                          type: boolean
+                          example: true
+                        ExtentOfDamage:
+                          type: string
+                          example: "Moderate"
+                        VehicleNumber:
+                          type: string
+                          example: "V1234"
+                        VehicleVIN:
+                          type: string
+                          example: "VIN12345"
+                        LossDate:
+                          type: string
+                          format: date-time
+                          example: "2024-03-01T00:00:00.000Z"
+                        Branch:
+                          type: string
+                          example: "Austin"
+                        IncidentLocationCity:
+                          type: string
+                          example: "Austin"
+                        IncidentLocationState:
+                          type: string
+                          example: "Texas"
+                        ImagesAzureContainerURL:
+                          type: string
+                          example: "https://azure.com/image1"
+                  message:
+                    type: string
+                    example: "Auto incidents (driver at fault) retrieved successfully"
+              example:
+                success: true
+                data:
+                  - Title: "V1234-2024-03-01"
+                    ReportedBy: "Jane Doe"
+                    DriverName: "John Doe"
+                    DriverEmail: "john.doe@example.com"
+                    IsDriverAtFault: true
+                    ClaimSubmitted: true
+                    ExtentOfDamage: "Moderate"
+                    VehicleNumber: "V1234"
+                    VehicleVIN: "VIN12345"
+                    LossDate: "2024-03-01T00:00:00.000Z"
+                    Branch: "Austin"
+                    IncidentLocationCity: "Austin"
+                    IncidentLocationState: "Texas"
+                    ImagesAzureContainerURL: "https://azure.com/image1"
+                message: "Auto incidents (driver at fault) retrieved successfully"
+  /api/incidents/auto-incidents-driver-at-fault-count-by-month:
+    get:
+      tags:
+        - Incidents
+      summary: Get count of auto incidents where the driver was at fault by month
+      description: Retrieve the count of auto incidents where the driver was at fault, grouped by month.
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          description: The start date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: The end date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: A standardized response format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Year:
+                          type: integer
+                          example: 2024
+                        Month:
+                          type: integer
+                          example: 1
+                        IncidentCount:
+                          type: integer
+                          example: 5
+                  message:
+                    type: string
+                    example: "Auto incidents count by month (driver at fault) retrieved successfully"
+              example:
+                success: true
+                data:
+                  - Year: 2024
+                    Month: 1
+                    IncidentCount: 5
+                message: "Auto incidents count by month (driver at fault) retrieved successfully"
+  /api/incidents/claims-filed-yes:
+    get:
+      tags:
+        - Incidents
+      summary: Get claims filed with "Yes"
+      description: Retrieve a list of claims that have been filed with a "Yes" status.
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          description: The start date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: The end date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: A standardized response format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Title:
+                          type: string
+                          example: "V1234-2024-03-01"
+                        ReportedBy:
+                          type: string
+                          example: "Jane Doe"
+                        DriverName:
+                          type: string
+                          example: "John Doe"
+                        DriverEmail:
+                          type: string
+                          example: "john.doe@example.com"
+                        IsDriverAtFault:
+                          type: boolean
+                          example: true
+                        ClaimSubmitted:
+                          type: boolean
+                          example: true
+                        ExtentOfDamage:
+                          type: string
+                          example: "Moderate"
+                        VehicleNumber:
+                          type: string
+                          example: "V1234"
+                        VehicleVIN:
+                          type: string
+                          example: "VIN12345"
+                        LossDate:
+                          type: string
+                          format: date-time
+                          example: "2024-03-01T00:00:00.000Z"
+                        Branch:
+                          type: string
+                          example: "Austin"
+                        IncidentLocationCity:
+                          type: string
+                          example: "Austin"
+                        IncidentLocationState:
+                          type: string
+                          example: "Texas"
+                        ImagesAzureContainerURL:
+                          type: string
+                          example: "https://azure.com/image1"
+                  message:
+                    type: string
+                    example: "Claims filed (Yes) retrieved successfully"
+              example:
+                success: true
+                data:
+                  - Title: "V1234-2024-03-01"
+                    ReportedBy: "Jane Doe"
+                    DriverName: "John Doe"
+                    DriverEmail: "john.doe@example.com"
+                    IsDriverAtFault: true
+                    ClaimSubmitted: true
+                    ExtentOfDamage: "Moderate"
+                    VehicleNumber: "V1234"
+                    VehicleVIN: "VIN12345"
+                    LossDate: "2024-03-01T00:00:00.000Z"
+                    Branch: "Austin"
+                    IncidentLocationCity: "Austin"
+                    IncidentLocationState: "Texas"
+                    ImagesAzureContainerURL: "https://azure.com/image1"
+                message: "Claims filed (Yes) retrieved successfully"
+  /api/incidents/claims-filed-yes-count-by-month:
+    get:
+      tags:
+        - Incidents
+      summary: Get count of claims filed with "Yes" by month
+      description: Retrieve the count of claims filed with "Yes", grouped by month.
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          description: The start date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: The end date for the query (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: A standardized response format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Year:
+                          type: integer
+                          example: 2024
+                        Month:
+                          type: integer
+                          example: 1
+                        IncidentCount:
+                          type: integer
+                          example: 2
+                  message:
+                    type: string
+                    example: "Claims filed count by month (Yes) retrieved successfully"
+              example:
+                success: true
+                data:
+                  - Year: 2024
+                    Month: 1
+                    IncidentCount: 2
+                message: "Claims filed count by month (Yes) retrieved successfully"
