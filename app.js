@@ -20,7 +20,7 @@ app.use(cors({
 app.use(express.json());
 
 // Conditionally load Swagger UI in development
-if (process.env.NODE_ENV === "development") {
+//if (process.env.NODE_ENV === "development") {
     const swaggerUi = require("swagger-ui-express");
     const yaml = require("js-yaml");
     const fs = require("fs");
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "development") {
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
     console.log(`Swagger UI is running at http://localhost:${PORT}/api-docs`);
-}
+//}
 
 // OpenAPI Validator
 app.use(
